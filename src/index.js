@@ -4,7 +4,11 @@
 const express = require('express');
 const morgan = require('morgan');
 
+// app/database
 const app = express();
+const connectDatabase = require('./config/db');
+
+connectDatabase();
 
 // set our port
 app.set('port', process.env.PORT || 5000);
@@ -12,13 +16,18 @@ app.set('port', process.env.PORT || 5000);
 // morgan gives us http request logging
 app.use(morgan('dev'));
 
+// json parser
+app.use(express.json());
+
 // TODO add additional routes here
+
+app.use('/api/users', require('./routes/api/users'));
 
 // send a friendly greeting for the root route
 app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to the Course Review API'
-  });
+	res.json({
+		message: 'Welcome to the Course Review API'
+	});
 });
 
 // uncomment this route in order to test the global error handler
@@ -28,21 +37,21 @@ app.get('/', (req, res) => {
 
 // send 404 if no other route matched
 app.use((req, res) => {
-  res.status(404).json({
-    message: 'Route Not Found'
-  })
-})
+	res.status(404).json({
+		message: 'Route Not Found'
+	});
+});
 
 // global error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
-    message: err.message,
-    error: {}
-  });
+	console.error(err.stack);
+	res.status(err.status || 500).json({
+		message: err.message,
+		error: {}
+	});
 });
 
 // start listening on our port
 const server = app.listen(app.get('port'), () => {
-  console.log(`Express server is listening on port ${server.address().port}`);
+	console.log(`Express server is listening on port ${server.address().port}`);
 });
