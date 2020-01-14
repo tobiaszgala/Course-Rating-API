@@ -33,25 +33,17 @@ router.post(
 		})
 	],
 	async (req, res) => {
-		const errors = validationResult(req).formatWith(errorFormatter);
+		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
+			return res.status(400).json(errorFormatter(errors.array(), 400));
 		}
 
 		try {
 			const { fullName, emailAddress, password } = req.body;
 
-			let user = await User.findOne({ email: emailAddress });
+			let user = await User.findOne({ emailAddress });
 
-			if (user)
-				return res.status(400).json({
-					errors: [
-						{
-							message: 'User already exists',
-							code: 400
-						}
-					]
-				});
+			if (user) return res.status(400).json(errorFormatter('User already exists', 400));
 
 			user = new User({
 				fullName,
@@ -67,14 +59,7 @@ router.post(
 			res.setHeader('Location', '/');
 			res.status(201).json({});
 		} catch (e) {
-			res.status(500).json({
-				errors: [
-					{
-						message: 'Could not register a user',
-						code: 500
-					}
-				]
-			});
+			res.status(500).json(errorFormatter('Could not register a user'));
 		}
 	}
 );
