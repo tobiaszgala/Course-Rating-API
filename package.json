@@ -4,13 +4,20 @@
 	"description": "",
 	"main": "src/index.js",
 	"scripts": {
-		"start": "nodemon ./src/index.js localhost 5000",
-		"db": "/Users/Tobiasz/mongodb/bin/mongod --dbpath /Users/Tobiasz/mongodb-data/"
+		"start": "env-cmd -f ./config/production.env node ./src/index.js",
+		"dev": "env-cmd -f ./config/development.env nodemon ./src/index.js",
+		"test": "env-cmd -f ./config/test.env jest"
 	},
-	"author": "",
+	"jest": {
+		"testEnvironment": "node"
+	},
+	"author": "Tobiasz Gala",
 	"license": "MIT",
 	"devDependencies": {
-		"nodemon": "^2.0.2"
+		"env-cmd": "^10.0.1",
+		"jest": "^24.9.0",
+		"nodemon": "^2.0.2",
+		"supertest": "^4.0.2"
 	},
 	"dependencies": {
 		"basic-auth": "^2.0.1",
