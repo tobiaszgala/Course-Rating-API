@@ -7,7 +7,7 @@ services: mongodb
 cache:  
   directories:
     - "node_modules"
-install:
+before_install:
   - npm install -g codecov
 script:
-  - jest && codecov
+  - npm run test-ci
