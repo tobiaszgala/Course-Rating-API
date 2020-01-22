@@ -6,9 +6,7 @@
 	"scripts": {
 		"start": "env-cmd -f ./config/production.env node ./src/index.js",
 		"dev": "env-cmd -f ./config/development.env nodemon ./src/index.js",
-		"test": "env-cmd -f ./config/test.env jest",
-		"test-watch": "env-cmd -f ./config/test.env jest --watchAll",
-		"test-ci": "env-cmd -f ./config/test.env jest && codecov"
+		"test": "env-cmd -f ./config/test.env jest"
 	},
 	"jest": {
 		"testEnvironment": "node",
