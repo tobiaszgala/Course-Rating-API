@@ -17,14 +17,14 @@
 		"env-cmd": "^10.0.1",
 		"jest": "^24.9.0",
 		"nodemon": "^2.0.2",
-		"supertest": "^4.0.2"
+		"supertest": "^4.0.2",
+		"morgan": "^1.9.1"
 	},
 	"dependencies": {
 		"basic-auth": "^2.0.1",
 		"bcryptjs": "^2.4.3",
 		"express": "^4.17.1",
 		"express-validator": "^6.3.1",
-		"mongoose": "^5.8.7",
-		"morgan": "^1.9.1"
+		"mongoose": "^5.8.7"
 	}
 }
