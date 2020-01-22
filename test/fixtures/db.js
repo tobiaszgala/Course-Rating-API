@@ -13,7 +13,7 @@ const setupDatabase = async () => {
 
 const cleanDatabase = async () => {
 	await User.deleteMany();
-	// close mongoose connection to exit jest
+	// close mongoose connection to exit Jest
 	mongoose.connection.close();
 };
 
