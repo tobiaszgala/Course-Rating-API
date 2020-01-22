@@ -9,7 +9,9 @@
 		"test": "env-cmd -f ./config/test.env jest"
 	},
 	"jest": {
-		"testEnvironment": "node"
+		"testEnvironment": "node",
+		"coverageDirectory": "./coverage/",
+		"collectCoverage": true
 	},
 	"author": "Tobiasz Gala",
 	"license": "MIT",
