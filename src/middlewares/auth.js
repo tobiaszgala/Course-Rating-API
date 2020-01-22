@@ -1,44 +1,28 @@
 const auth = require('basic-auth');
 const User = require('../models/User');
+const errorFormatter = require('../utils/errorFormatter');
 
 const checkAuth = async (req, res, next) => {
 	const credentials = auth(req);
-	if (!credentials)
-		return res.status(401).json({
-			errors: [
-				{
-					message: 'Please provide credentials',
-					code: 401
-				}
-			]
-		});
+
+	// if credentials not sent
+	if (!credentials) return res.status(401).json(errorFormatter('Please provide credentials', 401));
 
 	try {
 		const { name, pass } = credentials;
-		const user = await User.findOne({ emailAddress: name, password: pass });
 
-		if (user) {
+		// callback for project requirements
+		// run auth method on user model
+		User.auth(name, pass, (user, err) => {
+			if (err) {
+				return res.status(401).json(errorFormatter('Unauthorized', 401));
+			}
+
 			req.user = user;
 			return next();
-		}
-
-		return res.status(401).json({
-			errors: [
-				{
-					message: 'Unauthorized',
-					code: 401
-				}
-			]
 		});
 	} catch (e) {
-		return res.status(500).json({
-			errors: [
-				{
-					message: 'Could not load data from the server',
-					code: 500
-				}
-			]
-		});
+		return res.status(500).json(errorFormatter('There was a problem with authentication'));
 	}
 };
 

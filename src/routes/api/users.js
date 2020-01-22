@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const errorFormatter = require('../../utils/errorFormatter');
@@ -7,7 +6,11 @@ const auth = require('../../middlewares/auth');
 const User = require('../../models/User');
 
 /*
-    URL: GET /api/users
+	GET
+*/
+
+/*
+    URI: GET /api/users
     Returns the currently authenticated user
 */
 router.get('/', auth, async (req, res) => {
@@ -15,7 +18,11 @@ router.get('/', auth, async (req, res) => {
 });
 
 /*
-    URL: POST /api/users
+	POST
+*/
+
+/*
+    URI: POST /api/users
     Creates a user, sets the Location header to "/", and returns no content
 */
 router.post(
@@ -32,10 +39,15 @@ router.post(
 			}
 		})
 	],
-	async (req, res) => {
+	async (req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).json(errorFormatter(errors.array(), 400));
+			const err = new Error('Could not create a user');
+			err.status = 400;
+			err.errors = errorFormatter(errors.array(), err.status);
+
+			return next(err);
+			// return res.status(400).json(errorFormatter(errors.array(), 400));
 		}
 
 		try {
@@ -51,8 +63,7 @@ router.post(
 				password
 			});
 
-			user.password = await bcrypt.hash(password, 10);
-
+			// hashed password in pre-save hook
 			await user.save();
 
 			// project requirement ¯\_(ツ)_/¯

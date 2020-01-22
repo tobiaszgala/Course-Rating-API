@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const CourseShema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: 'users'
+		ref: 'User'
 	},
 	title: {
 		type: String,
@@ -18,6 +18,7 @@ const CourseShema = new Schema({
 	materialsNeeded: String,
 	steps: [
 		{
+			_id: false,
 			stepNumber: Number,
 			title: {
 				type: String,
@@ -32,9 +33,9 @@ const CourseShema = new Schema({
 	reviews: [
 		{
 			type: Schema.Types.ObjectId,
-			ref: 'reviews'
+			ref: 'Review'
 		}
 	]
 });
 
-module.exports = Course = mongoose.model('courses', CourseShema);
+module.exports = Course = mongoose.model('Course', CourseShema);
