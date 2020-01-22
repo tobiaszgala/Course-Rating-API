@@ -19,3 +19,7 @@ Test
 ```
 npm test
 ```
+
+### Notice
+
+Basic Auth was used instead of JWT or Sessions for project requirements.
