@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/tobiaszgala/Course-Rating-API.svg?branch=master)](https://travis-ci.com/tobiaszgala/Course-Rating-API)
-![Codecov](https://img.shields.io/codecov/c/gh/tobiaszgala/Course-Rating-API)
+[![Codecov](https://img.shields.io/codecov/c/gh/tobiaszgala/Course-Rating-API)](https://codecov.io/gh/tobiaszgala/Course-Rating-API)
 
 # Course-Rating-API
 
