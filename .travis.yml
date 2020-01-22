@@ -2,12 +2,14 @@ language: node_js
 node_js: 
   - "node"
   - "10"
-  - "7"
+  - "8"
 services: mongodb
 cache:  
   directories:
     - "node_modules"
 before_install:
   - npm install -g codecov
+before_script:
+  - npm update
 script:
   - npm run test-ci
